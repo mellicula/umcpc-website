@@ -1,4 +1,4 @@
-# UMCPC Website
+# UMCPC Website 😈
 
 Repository for the new University of Competitive Programming Club website.
 
