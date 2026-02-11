@@ -1,0 +1,44 @@
+[
+  {
+    "id": 1,
+    "name": "Airwallex",
+    "blurb": "Airwallex is a global financial technology platform that helps businesses manage financial operations without the high fees of traditional banks",
+    "tier": "Gold",
+    "url": "https://www.airwallex.com/au"
+  },
+  {
+    "id": 2,
+    "name": "Jane Street",
+    "blurb": "Jane Street is a global trading firm and liquidity provider that specializes in technology-driven trading strategies across various asset classes.",
+    "tier": "Gold",
+    "url": "https://www.janestreet.com/"
+  },
+  {
+    "id": 3,
+    "name": "RecordPoint",
+    "blurb": "RecordPoint brings calm to the chaotic world of data, letting organizations discover, govern, and control their data for tighter compliance, more efficiency, and less risk.",
+    "tier": "Silver",
+    "url": "https://www.recordpoint.com/"
+  },
+  {
+    "id": 4,
+    "name": "Optiver",
+    "blurb": "Optiver is a leading global tech-driven proprietary trading firm and market maker, dedicated to improving financial markets through speed, technology, and algorithmic trading.",
+    "tier": "Silver",
+    "url": "https://optiver.com/"
+  },
+  {
+    "id": 5,
+    "name": "QRT",
+    "blurb": "Qube Research & Technologies (QRT) is a global, technology-driven, multi-strategy investment manager.",
+    "tier": "Bronze",
+    "url": "https://www.qube-rt.com/"
+  },
+  {
+    "id": 6,
+    "name": "Two Dot Social",
+    "blurb": "Two Dot Social is your go-to cafe for great coffee, good vibes, and delicious eats in a vibrant, welcoming space.",
+    "tier": "Community Partner",
+    "url": "https://www.twodotsocial.com/"
+  }
+]
