@@ -158,7 +158,7 @@ const Sponsors = () => {
         <div className="mb-10 bg-club-blue-800 border-2 border-club-blue-100 rounded-xl shadow-lg p-6 text-white max-w-3xl">
           <p className="text-lg font-semibold mb-2">Our supporters</p>
           <p className="text-white/80 max-w-3xl mx-auto">
-            Thanks to our sponsors for helping us run events, support students,
+            Thanks to our sponsors for helping us run events, support students
             and grow the competitive programming community.
           </p>
           <div className="mt-4">
