@@ -1,35 +1,45 @@
 import React, { useState, useEffect } from 'react'
 
-// Safe filter function
 const filterEvents = (events, upcoming = true) => {
   if (!Array.isArray(events)) return []
+
+  const now = new Date()
+
   return events.filter((event) => {
     if (!event.date) return false
-    const isPast = new Date(event.date) < new Date()
+
+    const eventDate = new Date(event.date)
+    if (isNaN(eventDate)) return false
+
+    const isPast = eventDate < now
     return upcoming ? !isPast : isPast
   })
 }
+
 const EventCard = ({ event }) => (
-  <div className="relative w-full bg-club-blue-800 rounded-xl shadow-lg overflow-hidden group cursor-pointer transition-transform transform hover:scale-105 hover:shadow-2xl border-2 border-club-blue-100">
-    {/* Event Image */}
+  <div className="relative w-full min-w-[280px] max-w-[380px] flex-1 h-56 sm:h-64 md:h-72 bg-club-blue-800 rounded-xl shadow-lg overflow-hidden group cursor-pointer transition-transform hover:scale-[1.02] hover:shadow-2xl border-2 border-club-blue-100">
     {event.image && (
       <img
         src={event.image}
         alt={event.name}
-        className="w-full h-72 object-cover opacity-80 transition-transform duration-300 group-hover:scale-110"
+        className="absolute inset-0 w-full h-full object-cover transition-transform duration-300 group-hover:scale-110"
       />
     )}
 
-    {/* Title overlay at bottom */}
-    <div className="absolute bottom-0 w-full bg-club-blue-800 bg-opacity-90 text-white text-center py-3 text-lg font-bold">
+    <div className="absolute bottom-0 w-full bg-club-blue-900/90 text-white text-center py-3 text-sm sm:text-base md:text-lg font-bold z-10">
       {event.name}
     </div>
 
-    {/* Hidden details overlay */}
-    <div className="absolute inset-0 bg-club-blue-800 bg-opacity-85 text-white p-6 flex flex-col opacity-0 transition-opacity duration-300 group-hover:opacity-100">
-      <h2 className="text-2xl font-bold mb-2">{event.name}</h2>
-      <p className="mb-4">{event.description}</p>
-      <div className="flex flex-col gap-1 font-medium text-sm">
+    <div className="absolute inset-0 bg-club-blue-900/90 text-white p-4 sm:p-6 flex flex-col justify-center opacity-0 transition-opacity duration-300 group-hover:opacity-100 z-20">
+      <h2 className="text-lg sm:text-xl md:text-2xl font-bold mb-2">
+        {event.name}
+      </h2>
+
+      <p className="mb-3 text-xs sm:text-sm md:text-base">
+        {event.description}
+      </p>
+
+      <div className="flex flex-col gap-1 text-xs sm:text-sm font-medium">
         <p>🗓️ {event.date ? new Date(event.date).toDateString() : 'TBA'}</p>
         <p>⏰ {event.time || 'TBA'}</p>
         <p>📍 {event.location || 'TBA'}</p>
@@ -44,54 +54,80 @@ const Events = () => {
   const [fadeIn, setFadeIn] = useState(false)
 
   useEffect(() => {
-    const fetchEvents = async () => {
+    const loadEvents = async () => {
       try {
         const res = await fetch('/api/events')
+
+        if (!res.ok) throw new Error('API fetch failed')
+
         const data = await res.json()
-        if (!Array.isArray(data)) {
-          console.error('Expected array but got:', data)
-          setEvents([])
-        } else {
+
+        if (Array.isArray(data) && data.length > 0) {
           setEvents(data)
+        } else {
+          throw new Error('API returned empty or invalid data')
         }
-        setFadeIn(true)
       } catch (error) {
-        console.error('Failed to fetch events:', error)
-        setEvents([])
+        console.warn('Falling back to local events:', error)
+
+        try {
+          const res = await fetch('/events/events.json')
+          const data = await res.json()
+
+          if (Array.isArray(data)) {
+            setEvents(data)
+          } else {
+            setEvents([])
+          }
+        } catch (localError) {
+          console.error('Failed to fetch local events:', localError)
+          setEvents([])
+        }
       } finally {
+        setFadeIn(true)
         setLoading(false)
       }
     }
-    fetchEvents()
+
+    loadEvents()
   }, [])
 
   if (loading) return <p className="mx-10 mt-10">Loading events...</p>
 
+  const upcomingEvents = filterEvents(events, true)
+  const pastEvents = filterEvents(events, false)
+
   return (
-    <div
-      className={`h-screen flex-1 flex overflow-hidden fade-in ${
-        fadeIn ? 'show' : ''
-      }`}
-    >
+    <div className={`h-screen flex-1 flex overflow-hidden fade-in ${fadeIn ? 'show' : ''}`}>
       <div className="flex-1 overflow-y-scroll px-10">
-        {/* Upcoming Events */}
         <h1 className="page-header-font mb-6 h-20 header-underline">
           Upcoming Events
         </h1>
-        <div className="grid grid-cols-3 gap-6 mb-10">
-          {filterEvents(events, true).map((event) => (
-            <EventCard key={event.id} event={event} />
-          )).length === 0 && <p className="w-full bg-club-blue-800 bg-opacity-90 text-white text-center py-3 text-lg font-bold">No upcoming events.</p>}
+        <div className="flex flex-wrap gap-6 mb-10 items-start">
+          {upcomingEvents.length > 0 ? (
+            upcomingEvents.map((event, index) => (
+              <EventCard key={event.id || event.name || index} event={event} />
+            ))
+          ) : (
+            <p className="w-full bg-club-blue-800 bg-opacity-90 text-white text-center py-3 text-lg font-bold">
+              No upcoming events.
+            </p>
+          )}
         </div>
 
-        {/* Past Events */}
         <h1 className="page-header-font mb-6 h-20 header-underline">
           Past Events
         </h1>
-        <div className="grid grid-cols-3 gap-6 mb-10">
-          {filterEvents(events, false).map((event) => (
-            <EventCard key={event.id} event={event} />
-          )).length === 0 && <p className="w-full bg-club-blue-800 bg-opacity-90 text-white text-center py-3 text-lg font-bold">No past events.</p>}
+        <div className="flex flex-wrap gap-6 mb-10 items-start">
+          {pastEvents.length > 0 ? (
+            pastEvents.map((event, index) => (
+              <EventCard key={event.id || event.name || index} event={event} />
+            ))
+          ) : (
+            <p className="w-full bg-club-blue-800 bg-opacity-90 text-white text-center py-3 text-lg font-bold">
+              No past events.
+            </p>
+          )}
         </div>
       </div>
     </div>

@@ -1,0 +1,18 @@
+[
+  {
+    "image": "events/images/Airwallex.webp",
+    "name": "🧠 Airwallex Competition 🧠",
+    "description": "Airwallex Competition was so fun",
+    "date": "2025-03-27",
+    "time": "16:00-21:00",
+    "location": "Melbourne Connect Science Gallery"
+  },
+  {
+    "image": "/dp-workshop.png",
+    "name": "🔥 Dynamic Programming Workshop 🔥",
+    "description": "for ppl who want to learn dp and eat pizza",
+    "date": "2025-04-09",
+    "time": "17:00-19:00",
+    "location": "Chemistry Building Room 158"
+  }
+]

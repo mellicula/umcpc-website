@@ -115,7 +115,7 @@ const groupByTier = (items) => {
   return out
 }
 
-const tierOrder = ['Gold', 'Silver', 'Bronze', 'Community Partner']
+const tierOrder = ['Diamond', 'Gold', 'Silver', 'Bronze', 'Community Partner']
 
 const Sponsors = () => {
   const [sponsors, setSponsors] = useState([])
