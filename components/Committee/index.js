@@ -1,20 +1,23 @@
 import React, { useEffect, useState } from 'react'
-import { COMMITTEE, PROFILE_PATH } from '../../public/profiles/2025/profiles'
+import { COMMITTEE, PROFILE_PATH } from '../../public/profiles/2026/profiles'
 import * as c2022 from '../../public/profiles/2022/profiles'
 import * as c2023 from '../../public/profiles/2023/profiles'
 import * as c2024 from '../../public/profiles/2024/profiles'
+import * as c2025 from '../../public/profiles/2025/profiles'
 import Member from './Member'
 
 const Committee = () => {
   const past = [
+    { year: '2025', content: c2025 },
     { year: '2024', content: c2024 },
     { year: '2023', content: c2023 },
     { year: '2022', content: c2022 },
+    
   ]
   return (
     <>
       <Year profilePath={PROFILE_PATH} committee={COMMITTEE} />
-      {past.map(({ year, content: c }) => {
+      {past.map(({ year, content: c }) => {1
         const { PROFILE_PATH, COMMITTEE } = c
         return (
           <>

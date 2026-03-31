@@ -1,0 +1,58 @@
+[
+  {
+    "id": 1,
+    "name": "Airwallex",
+    "blurb": "Airwallex is a global financial technology platform that helps businesses manage financial operations without the high fees of traditional banks",
+    "tier": "Diamond",
+    "url": "https://www.airwallex.com/au"
+  },
+  {
+    "id": 2,
+    "name": "Jane Street",
+    "blurb": "Jane Street is a global trading firm and liquidity provider that specializes in technology-driven trading strategies across various asset classes.",
+    "tier": "Gold",
+    "url": "https://www.janestreet.com/"
+  },
+  {
+    "id": 3,
+    "name": "Citadel Securities",
+    "blurb": "Citadel Securities is a leading global market maker that provides liquidity and trading services across a wide range of financial instruments.",
+    "tier": "Gold",
+    "url": "https://www.citadelsecurities.com/"
+  },
+  {
+    "id": 4,
+    "name": "IMC",
+    "blurb": "IMC is a global technology-driven trading firm that provides liquidity and trading services across a wide range of financial instruments.",
+    "tier": "Silver",
+    "url": "https://www.imc.com/"
+  },
+  {
+    "id": 5,
+    "name": "Atlassian",
+    "blurb": "Atlassian is a software company that helps teams plan, track, and manage their work.",
+    "tier": "Silver",
+    "url": "https://www.atlassian.com/"
+  },
+  {
+    "id": 6,
+    "name": "Susquehanna International Group",
+    "blurb": "Susquehanna International Group is a global financial services firm that provides a wide range of investment banking, trading, and market making services.",
+    "tier": "Silver",
+    "url": "https://www.susquehanna.com/"
+  },
+  {
+    "id": 7,
+    "name": "RecordPoint",
+    "blurb": "RecordPoint brings calm to the chaotic world of data, letting organizations discover, govern, and control their data for tighter compliance, more efficiency, and less risk.",
+    "tier": "Silver",
+    "url": "https://www.recordpoint.com/"
+  },
+  {
+    "id": 8,
+    "name": "Optiver",
+    "blurb": "Optiver is a leading global tech-driven proprietary trading firm and market maker, dedicated to improving financial markets through speed, technology, and algorithmic trading.",
+    "tier": "Bronze",
+    "url": "https://optiver.com/"
+  }
+]

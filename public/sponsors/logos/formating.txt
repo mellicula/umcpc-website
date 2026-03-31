@@ -1,0 +1,1 @@
+Make the names correspond exactly to the json names (images type does not matter)
