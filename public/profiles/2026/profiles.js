@@ -30,13 +30,6 @@ export const COMMITTEE = {
       img: '/lionel.png',
       text: '',
     },
-    {
-      id: 5,
-      name: 'Bryan Sumartono',
-      title: 'Marketing Director',
-      img: '/tmp-profile.jpeg',
-      text: '',
-    },
   ],
 
   general: [
