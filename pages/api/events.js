@@ -8,6 +8,14 @@ const notion = new Client({
 
 const dataSourceId = process.env.NOTION_EVENTS_DATA_SOURCE_ID
 
+// CDN serves fresh for 5 min, then stale for up to 1 h while refetching Notion
+const EVENTS_CACHE_CONTROL = 'public, s-maxage=300, stale-while-revalidate=3600'
+
+function sendCached(res, data) {
+  res.setHeader('Cache-Control', EVENTS_CACHE_CONTROL)
+  return res.status(200).json(data)
+}
+
 async function readLocalEvents() {
   const filePath = path.join(process.cwd(), 'public', 'events', 'events.json')
 
@@ -42,7 +50,6 @@ async function normalizeLocalEventImages(events) {
   }
 
   const normalized = []
-  const defaultPath = '/events/images/default.jpeg'
 
   for (const ev of events) {
     const out = { ...ev }
@@ -71,8 +78,7 @@ async function normalizeLocalEventImages(events) {
       if (resolved) break
     }
 
-    // fallback to default.jpeg
-    out.image = resolved || defaultPath
+    out.image = resolved || null // client renders the icon fallback
 
     normalized.push(out)
   }
@@ -95,7 +101,7 @@ export default async function handler(req, res) {
     try {
       const events = await readLocalEvents()
       const normalized = await normalizeLocalEventImages(events)
-      return res.status(200).json(normalized)
+      return sendCached(res, normalized)
     } catch (error) {
       console.error('Local events fallback failed:', error)
 
@@ -122,7 +128,7 @@ export default async function handler(req, res) {
         Time,
       } = page.properties
 
-      let imageUrl = '/events/images/default.jpeg'
+      let imageUrl = null
       if (Image && Array.isArray(Image.files) && Image.files.length > 0) {
         const f = Image.files[0]
         if (f && f.file && f.file.url) {
@@ -157,7 +163,7 @@ export default async function handler(req, res) {
         image: imageUrl,
       }
     })
-    return res.status(200).json(events)
+    return sendCached(res, events)
   } catch (error) {
     console.error('Notion API error:', error)
 
@@ -169,7 +175,7 @@ export default async function handler(req, res) {
         `Notion failed. Using local events.json (${normalized.length} events).`
       )
 
-      return res.status(200).json(normalized)
+      return sendCached(res, normalized)
     } catch (fallbackError) {
       console.error('Local events fallback failed:', fallbackError)
 

@@ -13,7 +13,7 @@
         "id": 2,
         "name": "David Wang",
         "title": "Vice President",
-        "img": "/tmp-profile.jpeg",
+        "img": "/profiles/2026/david.png",
         "text": ""
       },
       {
@@ -27,7 +27,7 @@
         "id": 4,
         "name": "Lavie Kolchinsky",
         "title": "Treasurer",
-        "img": "/tmp-profile.jpeg",
+        "img": "",
         "text": ""
       }
     ],
@@ -43,7 +43,7 @@
         "id": 2,
         "name": "Edge Wang",
         "title": "General Committee",
-        "img": "/tmp-profile.jpeg",
+        "img": "/profiles/2026/edge.png",
         "text": ""
       },
       {

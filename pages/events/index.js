@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react'
+import EventIcon from '../../components/shared/EventIcon'
 
 const filterEvents = (events, upcoming = true) => {
   if (!Array.isArray(events)) return []
@@ -32,37 +33,50 @@ const filterEvents = (events, upcoming = true) => {
   })
 }
 
-const EventCard = ({ event }) => (
-  <div className="relative w-full sm:w-[280px] flex-none h-56 sm:h-64 md:h-72 bg-club-blue-800 rounded-xl shadow-lg overflow-hidden group cursor-pointer transition-transform hover:scale-[1.02] hover:shadow-2xl border-2 border-club-blue-100">
-    {event.image && (
-      <img
-        src={event.image.startsWith('/') ? event.image : `/${event.image}`}
-        alt={event.name}
-        className="absolute inset-0 w-full h-full object-cover transition-transform duration-300 group-hover:scale-110"
-      />
-    )}
+const EventCard = ({ event }) => {
+  const [imageFailed, setImageFailed] = useState(false)
+  const showImage = event.image && !imageFailed
 
-    <div className="absolute bottom-0 w-full bg-club-blue-900/90 text-white text-center py-3 text-sm sm:text-base md:text-lg font-bold z-10">
-      {event.name}
-    </div>
+  return (
+    // accent fill sits behind transparent images too
+    <div className="relative w-full sm:w-[280px] flex-none h-56 sm:h-64 md:h-72 bg-club-blue-400 rounded-xl shadow-lg overflow-hidden group cursor-pointer transition-transform hover:scale-[1.02] hover:shadow-2xl border-2 border-club-blue-100">
+      {showImage ? (
+        <img
+          src={event.image.startsWith('/') ? event.image : `/${event.image}`}
+          alt={event.name}
+          loading="lazy"
+          onError={() => setImageFailed(true)}
+          className="absolute inset-0 w-full h-full object-cover transition-transform duration-300 group-hover:scale-110"
+        />
+      ) : (
+        // pb-12 offsets the name bar so the icon sits in the visible centre
+        <div className="absolute inset-0 flex items-center justify-center pb-12">
+          <EventIcon className="w-3/4 h-3/4 text-white" />
+        </div>
+      )}
 
-    <div className="absolute inset-0 bg-club-blue-900/90 text-white p-4 sm:p-6 flex flex-col justify-center opacity-0 transition-opacity duration-300 group-hover:opacity-100 z-20">
-      <h2 className="text-lg sm:text-xl md:text-2xl font-bold mb-2">
+      <div className="absolute bottom-0 w-full bg-club-blue-900/90 text-white text-center py-3 text-sm sm:text-base md:text-lg font-bold z-10">
         {event.name}
-      </h2>
+      </div>
 
-      <p className="mb-3 text-xs sm:text-sm md:text-base">
-        {event.description}
-      </p>
+      <div className="absolute inset-0 bg-club-blue-900/90 text-white p-4 sm:p-6 flex flex-col justify-center opacity-0 transition-opacity duration-300 group-hover:opacity-100 z-20">
+        <h2 className="text-lg sm:text-xl md:text-2xl font-bold mb-2">
+          {event.name}
+        </h2>
 
-      <div className="flex flex-col gap-1 text-xs sm:text-sm font-small">
-        <p>🗓️ {event.date ? new Date(event.date).toDateString() : 'TBA'}</p>
-        <p>⏰ {event.time || 'TBA'}</p>
-        <p>📍 {event.location || 'TBA'}</p>
+        <p className="mb-3 text-xs sm:text-sm md:text-base">
+          {event.description}
+        </p>
+
+        <div className="flex flex-col gap-1 text-xs sm:text-sm font-small">
+          <p>🗓️ {event.date ? new Date(event.date).toDateString() : 'TBA'}</p>
+          <p>⏰ {event.time || 'TBA'}</p>
+          <p>📍 {event.location || 'TBA'}</p>
+        </div>
       </div>
     </div>
-  </div>
-)
+  )
+}
 
 const Events = () => {
   const [events, setEvents] = useState([])
@@ -108,14 +122,14 @@ const Events = () => {
     loadEvents()
   }, [])
 
-  if (loading) return <p className="mx-10 mt-10">Loading events...</p>
+  if (loading) return <p className="text-font mx-10 mt-10">Loading events...</p>
 
   const upcomingEvents = filterEvents(events, true)
   const pastEvents = filterEvents(events, false)
 
   return (
-    <div className={`flex-1 flex min-h-screen fade-in ${fadeIn ? 'show' : ''}`}>
-      <div className="flex-1 h-full overflow-y-auto px-10">
+    <div className={`fade-in ${fadeIn ? 'show' : ''}`}>
+      <div className="px-10">
         <h1 className="page-header-font mb-6 h-20 header-underline">
           Upcoming Events
         </h1>

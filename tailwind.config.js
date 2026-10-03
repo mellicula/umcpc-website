@@ -23,8 +23,7 @@ module.exports = {
         'club-orange': '#FFBD54',
       },
       fontFamily: {
-        raleway: ['Raleway'],
-        playfair: ['Playfair Display'],
+        raleway: ['Raleway', 'ui-sans-serif', 'system-ui', 'sans-serif'],
       },
     },
   },

@@ -69,12 +69,8 @@ const Resources = () => {
   }, [])
 
   return (
-    <div
-      className={`h-screen flex-1 flex overflow-hidden fade-in ${
-        fadeIn ? 'show' : ''
-      }`}
-    >
-      <div className="flex-1 overflow-y-scroll px-10">
+    <div className={`fade-in ${fadeIn ? 'show' : ''}`}>
+      <div className="px-10">
         <h1 className="page-header-font mb-6 h-20 header-underline">
           Resources
         </h1>

@@ -1,1 +1,1 @@
-Make the names correspond exactly to the json names (images type does not matter)
+Put the logo file in this folder and set the sponsor's "logo" field in sponsors.json to its path, e.g. "/sponsors/logos/IMC.png"

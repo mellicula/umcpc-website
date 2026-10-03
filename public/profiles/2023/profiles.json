@@ -20,7 +20,7 @@
         "id": 3,
         "name": "Linh Nguyen",
         "title": "Secretary",
-        "img": "/tmp-profile.jpeg",
+        "img": "",
         "text": ""
       },
       {
@@ -36,7 +36,7 @@
         "id": 1,
         "name": "Yifan Yang",
         "title": "Communications Officer",
-        "img": "/tmp-profile.jpeg",
+        "img": "",
         "text": ""
       },
       {
@@ -57,7 +57,7 @@
         "id": 4,
         "name": "Chuanyuan Liu",
         "title": "General Committee",
-        "img": "/tmp-profile.jpeg",
+        "img": "",
         "text": ""
       }
     ]

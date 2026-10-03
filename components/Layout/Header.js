@@ -2,6 +2,14 @@ import Image from 'next/image'
 import Link from 'next/link'
 import React, { useState } from 'react'
 import { useSpring, animated } from 'react-spring'
+import { UMSU_URL } from '../shared/Socials'
+
+const NAV_LINKS = [
+  { href: '/about-us', label: 'About Us' },
+  { href: '/events', label: 'Events' },
+  { href: '/sponsors', label: 'Sponsors' },
+  { href: '/resources', label: 'Resources' },
+]
 
 const Header = () => {
   const [mobileMenuExpanded, setMobileMenuExpanded] = useState(false)
@@ -9,7 +17,7 @@ const Header = () => {
   const styles = useSpring({
     from: { opacity: '0' },
     to: { opacity: '1' },
-    config: { duration: '1500' },
+    config: { duration: '300' },
   })
 
   const handleCloseMobileMenu = () => {
@@ -22,7 +30,7 @@ const Header = () => {
         <div className="flex justify-between">
           <div className="shrink-0">
             <Link href="/" passHref>
-              <button>
+              <a className="block">
                 <div className="flex flex-row items-center space-x-3 md:space-x-0 md:flex-col">
                   <div className="h-5 md:h-14 w-5 md:w-14 relative">
                     <Image
@@ -36,28 +44,18 @@ const Header = () => {
                     umcpc.
                   </p>
                 </div>
-              </button>
+              </a>
             </Link>
           </div>
-          <div className="hidden md:flex items-center space-x-3">
-            <div className="hidden md:flex items-center">
-              <Link href="/about-us" passHref>
-                <button className="header-btn">About Us</button>
-              </Link>
-              <Link href="/events" passHref>
-                <button className="header-btn">Events</button>
-              </Link>
-              <Link href="/sponsors" passHref>
-                <button className="header-btn">Sponsors</button>
-              </Link>
-              <Link href="/resources" passHref>
-                <button className="header-btn">Resources</button>
-              </Link>
+          <div className="hidden md:flex items-center gap-8">
+            <div className="hidden md:flex items-center gap-8">
+              {NAV_LINKS.map(({ href, label }) => (
+                <Link key={href} href={href} passHref>
+                  <a className="header-btn slide-underline">{label}</a>
+                </Link>
+              ))}
             </div>
-            <a
-              className="rounded-btn ml-4"
-              href="https://umsu.unimelb.edu.au/buddy-up/clubs/clubs-listing/join/6517/"
-            >
+            <a className="rounded-btn" href={UMSU_URL}>
               Join us
             </a>
           </div>
@@ -65,6 +63,8 @@ const Header = () => {
             <div className="flex items-center">
               <button
                 className="outline-none mobile-menu-button"
+                aria-label="Open menu"
+                aria-expanded={mobileMenuExpanded}
                 onClick={() => setMobileMenuExpanded(!mobileMenuExpanded)}
               >
                 <svg
@@ -87,35 +87,22 @@ const Header = () => {
 
       <div className={mobileMenuExpanded ? '' : 'hidden'}>
         <div
-          className="fixed top-0 right-4 z-40 w-full h-screen bg-club-blue-900/30 backdrop-blur-sm"
+          className="fixed inset-0 z-40 bg-club-blue-900/30 backdrop-blur-sm"
           onClick={() => setMobileMenuExpanded(false)}
         ></div>
         <div className="absolute top-0 right-0 z-50 w-44 h-fit pt-4 pb-6 pl-4 bg-[#162638] rounded-lg">
           <div className="flex flex-col space-y-4 items-baseline">
-            <Link href="/about-us" passHref>
-              <button className="menu-btn" onClick={handleCloseMobileMenu}>
-                About Us
-              </button>
-            </Link>
-            <Link href="/events" passHref>
-              <button className="menu-btn" onClick={handleCloseMobileMenu}>
-                Events
-              </button>
-            </Link>
-            <Link href="/sponsors" passHref>
-              <button className="menu-btn" onClick={handleCloseMobileMenu}>
-                Sponsors
-              </button>
-            </Link>
-            <Link href="/resources" passHref>
-              <button className="menu-btn" onClick={handleCloseMobileMenu}>
-                Resources
-              </button>
-            </Link>
+            {NAV_LINKS.map(({ href, label }) => (
+              <Link key={href} href={href} passHref>
+                <a className="menu-btn" onClick={handleCloseMobileMenu}>
+                  {label}
+                </a>
+              </Link>
+            ))}
             <div className="w-36 border-2 border-t border-club-blue-700"></div>
             <a
               className="btn-font btn-bg h-6 py-1 px-3 mr-4 rounded-full "
-              href="https://umsu.unimelb.edu.au/buddy-up/clubs/clubs-listing/join/6517/"
+              href={UMSU_URL}
             >
               Join us
             </a>
